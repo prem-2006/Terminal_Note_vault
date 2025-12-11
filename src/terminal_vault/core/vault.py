@@ -103,8 +103,18 @@ class Vault:
         with open(self.dat_file, 'wb') as f:
             f.write(encrypted_data)
 
-        # 3. Save CSV (Plain Text)
-        with open(self.csv_file, 'w', newline='') as f:
+        # 3. Save CSV (Plain Text) - MOVED to export_csv for manual export
+        # with open(self.csv_file, 'w', newline='') as f:
+        #     ... (removed automatic save)
+
+    def export_csv(self, filepath: str = None):
+        """Export vault entries to a CSV file."""
+        if self.is_locked:
+            raise RuntimeError("Vault is locked")
+            
+        target_file = filepath or self.csv_file
+        
+        with open(target_file, 'w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(['username', 'title', 'tags', 'note', 'date', 'id'])
             for entry in self.entries:
@@ -116,6 +126,7 @@ class Vault:
                     entry.get('date', ''),
                     entry.get('id', '')
                 ])
+
         
         # 4. Save Plain JSON (Readable Backup) - DISABLED for security
         # plain_json_file = self.filepath.replace('.json', '_plain.json')

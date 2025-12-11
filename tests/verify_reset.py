@@ -26,8 +26,8 @@ class TestResetCredentials(unittest.TestCase):
         self.vault.add_entry('Secret Plan', 'World Domination', ['top-secret'])
         self.vault.save()
         
-        # Verify CSV exists
-        self.assertTrue(os.path.exists(self.test_csv))
+        # Verify CSV does NOT exist (auto-export removed)
+        self.assertFalse(os.path.exists(self.test_csv))
         
         # Mock Config to use test_vault
         self.config_patcher = patch('terminal_vault.cli.main.Config')

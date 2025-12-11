@@ -79,6 +79,12 @@ vault check entries.csv
 vault report
 ```
 
+### Export to CSV
+Export all vault entries to a CSV file (e.g., for backup or external processing).
+```bash
+vault export
+```
+
 ### Show Plain Text
 Reveal all vault content in a plain text JSON file.
 **Warning**: The output file is unencrypted. It will be deleted automatically on the next run.

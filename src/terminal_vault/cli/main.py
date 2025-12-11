@@ -125,8 +125,12 @@ def main():
     # vault report
     subparsers.add_parser('report', help='Generate a security report')
 
+    # vault export
+    subparsers.add_parser('export', help='Export vault to CSV')
+
     # vault show-plain
     subparsers.add_parser('show-plain', help='Reveal vault content in plain text')
+
 
     args = parser.parse_args()
 
@@ -284,6 +288,18 @@ def main():
         if weak_count > 0:
             print("Recommendation: Rotate weak secrets.")
 
+    elif args.command == 'export':
+        if not os.path.exists(vault_file):
+            print("Vault not found.")
+            sys.exit(1)
+            
+        authenticate(vault, lockout_manager)
+        
+        csv_file = vault_file.replace('.json', '.csv')
+        vault.export_csv(csv_file)
+        print(f"Vault exported to {csv_file}")
+        logger.info("Vault exported to CSV")
+
     elif args.command == 'show-plain':
         if not os.path.exists(vault_file):
             print("Vault not found.")
@@ -299,6 +315,7 @@ def main():
             
         print(f"Vault content revealed in {plain_file}")
         print("WARNING: This file is unencrypted. It will be deleted next time you run the app.")
+
 
     else:
         parser.print_help()

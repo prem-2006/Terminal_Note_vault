@@ -1,16 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="terminal_vault",
+    name="terminal-note-vault",
     version="0.1.0",
-    description="A local password tool and policy checker (Demo)",
-    author="Antigravity",
-    packages=find_packages(where="src"),
     package_dir={"": "src"},
+    packages=find_packages(where="src"),
     entry_points={
         "console_scripts": [
             "vault=terminal_vault.cli.main:main",
         ],
     },
-    python_requires=">=3.8",
+    python_requires=">=3.6",
 )
